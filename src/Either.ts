@@ -60,6 +60,14 @@ export class Left<TL, TR> {
     return left(this.value);
   }
 
+  leftValueOr(defaultValue: TL): TL {
+    return this.value;
+  }
+
+  rightValueOr(defaultValue: TR): TR {
+    return defaultValue;
+  }
+
   equal(x: Either<TL, TR>): boolean {
     return x.match({
       left: lv => lv === this.value,
@@ -103,6 +111,14 @@ export class Right<TL, TR> {
 
   mapRight<T>(f: (x: TR) => T): Either<TL, T> {
     return this.bindRight((y: TR) => right<TL, T>(f(y)));
+  }
+
+  leftValueOr(defaultValue: TL): TL {
+    return defaultValue;
+  }
+
+  rightValueOr(defaultValue: TR): TR {
+    return this.value;
   }
 
   equal(x: Either<TL, TR>): boolean {

@@ -57,6 +57,16 @@ describe('Either monad', () => {
       expect(actual.equal(left(3))).to.be.true;
     }),
 
+    it('should always return left value', () => {
+      let sut = left<number, number>(5);
+      expect(sut.leftValueOr(1)).to.be.equal(5);
+    }),
+
+    it('should always return default right value', () => {
+      let sut = left<number, number>(5);
+      expect(sut.rightValueOr(1)).to.be.equal(1);
+    }),
+
     it('should correctly compare to other left with the same value', () => {
       expect(left<number, number>(5).equal(left<number, number>(5))).to.be.true;
     }),
@@ -123,6 +133,16 @@ describe('Either monad', () => {
       let sut = right<number, number>(5);
       let actual = sut.mapRight(x => x * 2);
       expect(actual.equal(right(10))).to.be.true;
+    }),
+
+    it('should always return right value', () => {
+      let sut = right<number, number>(5);
+      expect(sut.rightValueOr(1)).to.be.equal(5);
+    }),
+
+    it('should always return default left value', () => {
+      let sut = right<number, number>(5);
+      expect(sut.leftValueOr(1)).to.be.equal(1);
     }),
 
     it('should correctly compare to other right with the same value', () => {
