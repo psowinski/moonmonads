@@ -18,6 +18,11 @@ export interface EitherMatch<TL, TR, T> {
   right: (rv: TR) => T
 }
 
+export interface EitherTee<TL, TR> {
+  left: (lv: TL) => void,
+  right: (rv: TR) => void
+}
+
 export class Left<TL, TR> {
   constructor(private readonly value: TL){
   }
@@ -32,6 +37,11 @@ export class Left<TL, TR> {
 
   match<T>(actions: EitherMatch<TL, TR, T>): T {
     return actions.left(this.value);
+  }
+
+  tee(actions: EitherTee<TL, TR>): Either<TL, TR> {
+    actions.left(this.value);
+    return this;
   }
 }
 
@@ -49,6 +59,11 @@ export class Right<TL, TR> {
 
   match<T>(actions: EitherMatch<TL, TR, T>): T {
     return actions.right(this.value);
+  }
+
+  tee(actions: EitherTee<TL, TR>): Either<TL, TR> {
+    actions.right(this.value);
+    return this;
   }
 }
 

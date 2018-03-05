@@ -16,6 +16,17 @@ describe('Either monad', () => {
         right: rv => { throw new Error(rv); }
       });
       expect(actual).to.be.equal("abc");
+    }),
+
+    it('should execute dead end acton and return itself on tee', () => {
+      let sut = left<string, string>("lact");
+      let actual = "";
+      let ret = sut.tee({
+        left: lv => { actual = lv },
+        right: rv => { throw new Error(rv); }
+      });
+      expect(actual).to.be.equal("lact");
+      expect(ret).to.be.equal(sut);
     });
   }),
   describe('right function', () => {
@@ -32,6 +43,17 @@ describe('Either monad', () => {
         right: rv => rv
       });
       expect(actual).to.be.equal("abc");
+    }),
+
+    it('should execute dead end acton and return itself on tee', () => {
+      let sut = right<string, string>("ract");
+      let actual = "";
+      let ret = sut.tee({
+        left: lv => { throw new Error(lv); },
+        right: rv => { actual = rv }
+      });
+      expect(actual).to.be.equal("ract");
+      expect(ret).to.be.equal(sut);
     });
   });
 });
