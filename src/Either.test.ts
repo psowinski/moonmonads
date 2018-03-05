@@ -41,6 +41,18 @@ describe('Either monad', () => {
         }
       });
       expect(actual).to.be.equal(next);
+    }),
+
+    it('should correctly compare to other left with the same value', () => {
+      expect(left<number, number>(5).equal(left<number, number>(5))).to.be.true;
+    }),
+
+    it('should correctly compare to other left with different value', () => {
+      expect(left<number, number>(5).equal(left<number, number>(1))).to.be.false;
+    }),
+
+    it('should correctly compare to right', () => {
+      expect(left<string, string>("abc").equal(right<string, string>("abc"))).to.be.false;
     });
   }),
 
@@ -69,12 +81,24 @@ describe('Either monad', () => {
       });
       expect(actual).to.be.equal("ract");
       expect(ret).to.be.equal(sut);
-    })/*,
+    }),
 
     it('should execute bindLeft function and return right', () => {
       let sut = right<string, string>("rval");
       let actual = sut.bindLeft(x => { throw new Error(x); });
-      expect(actual).to.be.equal(sut);
-    })*/;
+      expect(actual.equal(right("rval"))).to.be.true;
+    })
+
+    it('should correctly compare to other right with the same value', () => {
+      expect(right<number, number>(5).equal(right<number, number>(5))).to.be.true;
+    }),
+
+    it('should correctly compare to other right with different value', () => {
+      expect(right<number, number>(5).equal(right<number, number>(1))).to.be.false;
+    }),
+
+    it('should correctly compare to left', () => {
+      expect(right<string, string>("abc").equal(left<string, string>("abc"))).to.be.false;
+    });
   });
 });

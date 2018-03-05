@@ -47,6 +47,13 @@ export class Left<TL, TR> {
   bindLeft<T>(f: (x: TL) => Either<T, TR>): Either<T, TR> {
     return f(this.value);
   }
+
+  equal(x: Either<TL, TR>): boolean {
+    return x.match({
+      left: lv => lv === this.value,
+      right: rv => false
+    });
+  }
 }
 
 export class Right<TL, TR> {
@@ -72,6 +79,13 @@ export class Right<TL, TR> {
 
   bindLeft<T>(f: (x: TL) => Either<T, TR>): Either<T, TR> {
     return right(this.value);
+  }
+
+  equal(x: Either<TL, TR>): boolean {
+    return x.match({
+      left: lv => false,
+      right: rv => rv === this.value
+    });
   }
 }
 
