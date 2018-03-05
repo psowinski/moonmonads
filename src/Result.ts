@@ -1,5 +1,5 @@
 /**
-* @module Result Monad
+* @module Result monad
 * @author Przemyslaw Sowinski <psowinski@users.noreply.github.com>
 * @version 1.0.0
 * @license MIT
@@ -19,8 +19,8 @@ export interface ResultMatch<TS, TF, T> {
 }
 
 export interface ResultTee<TS, TF> {
-  success: (s: TS) => never;
-  fail: (f: TF) => never;
+  success: (s: TS) => void;
+  fail: (f: TF) => void;
 }
 
 export class Success<TS, TF>

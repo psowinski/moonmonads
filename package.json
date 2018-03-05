@@ -7,6 +7,10 @@
     "build": "tsc",
     "test": "mocha -c -r ts-node/register src/**/*.test.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "keywords": [
     "monad"
   ],
