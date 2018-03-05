@@ -89,7 +89,7 @@ describe('Either monad', () => {
     it('should execute bindLeft function and return right', () => {
       let sut = right<string, string>("rval");
       let actual = sut.bindLeft(x => { throw new Error(x); });
-      expect(actual.equal(right("rval"))).to.be.true;
+      expect(actual.equal(right<number, string>("rval"))).to.be.true;
     })
 
     it('should execute bindRight function and return new right', () => {
@@ -100,6 +100,18 @@ describe('Either monad', () => {
         else { throw new Error(x); }
       });
       expect(actual).to.be.equal(next);
+    }),
+
+    it('should execute mapLeft function and return left monad', () => {
+      let sut = right<number, string>("abc");
+      let actual = sut.mapLeft(x => x * 2);
+      expect(actual.equal(right<number, string>("abc"))).to.be.true;
+    }),
+
+    it('should execute mapLeft function and return left monad', () => {
+      let sut = left<number, string>(5);
+      let actual = sut.mapLeft(x => x * 2);
+      expect(actual.equal(left(10))).to.be.true;
     }),
 
     it('should correctly compare to other right with the same value', () => {
