@@ -25,7 +25,7 @@ export interface ResultTee<TS, TF> {
 
 export class Success<TS, TF>
 {
-  constructor(readonly value: TS) {
+  constructor(private readonly value: TS) {
   }
 
   isSuccess(): boolean {
@@ -56,11 +56,18 @@ export class Success<TS, TF>
   valueOr(defaultValue: TS): TS {
     return this.value;
   }
+
+  equal(x: Result<TS, TF>): boolean {
+    return x.match({
+      success: sv => sv === this.value,
+      fail: fv => false
+    });
+  }
 }
 
 export class Fail<TS, TF>
 {
-  constructor(readonly value: TF) {
+  constructor(private readonly value: TF) {
   }
 
   isSuccess(): boolean {
@@ -90,6 +97,13 @@ export class Fail<TS, TF>
 
   valueOr(defaultValue: TS): TS {
     return defaultValue;
+  }
+
+  equal(x: Result<TS, TF>): boolean {
+    return x.match({
+      success: sv => false,
+      fail: fv => fv === this.value
+    });
   }
 }
 
