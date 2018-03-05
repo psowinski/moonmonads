@@ -27,8 +27,23 @@ describe('Either monad', () => {
       });
       expect(actual).to.be.equal("lact");
       expect(ret).to.be.equal(sut);
+    }),
+
+    it('should execute bindLeft function and return new left', () => {
+      let sut = left<string, string>("lval");
+      let next = left<string, string>("xyz");
+      let actual = sut.bindLeft(x => {
+        if(x === "lval") {
+          return next;
+        }
+        else {
+          throw new Error(x);
+        }
+      });
+      expect(actual).to.be.equal(next);
     });
   }),
+
   describe('right function', () => {
     it('should create right as either', () => {
       let sut = right<string, string>("");
@@ -54,6 +69,12 @@ describe('Either monad', () => {
       });
       expect(actual).to.be.equal("ract");
       expect(ret).to.be.equal(sut);
-    });
+    })/*,
+
+    it('should execute bindLeft function and return right', () => {
+      let sut = right<string, string>("rval");
+      let actual = sut.bindLeft(x => { throw new Error(x); });
+      expect(actual).to.be.equal(sut);
+    })*/;
   });
 });

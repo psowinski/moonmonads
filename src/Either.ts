@@ -43,6 +43,10 @@ export class Left<TL, TR> {
     actions.left(this.value);
     return this;
   }
+
+  bindLeft<T>(f: (x: TL) => Either<T, TR>): Either<T, TR> {
+    return f(this.value);
+  }
 }
 
 export class Right<TL, TR> {
@@ -64,6 +68,10 @@ export class Right<TL, TR> {
   tee(actions: EitherTee<TL, TR>): Either<TL, TR> {
     actions.right(this.value);
     return this;
+  }
+
+  bindLeft<T>(f: (x: TL) => Either<T, TR>): Either<T, TR> {
+    return right(this.value);
   }
 }
 
