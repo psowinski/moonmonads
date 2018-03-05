@@ -25,8 +25,6 @@ export interface ResultTee<TS, TF> {
 
 export class Success<TS, TF>
 {
-  readonly kind: "success";
-
   constructor(readonly value: TS) {
   }
 
@@ -62,8 +60,6 @@ export class Success<TS, TF>
 
 export class Fail<TS, TF>
 {
-  readonly kind: "fail";
-
   constructor(readonly value: TF) {
   }
 
