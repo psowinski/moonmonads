@@ -33,15 +33,18 @@ describe('Either monad', () => {
       let sut = left<string, string>("lval");
       let next = left<string, string>("xyz");
       let actual = sut.bindLeft(x => {
-        if(x === "lval") {
-          return next;
-        }
-        else {
-          throw new Error(x);
-        }
+        if(x === "lval") { return next; }
+        else { throw new Error(x); }
       });
       expect(actual).to.be.equal(next);
     }),
+
+    it('should execute bindRight function and return left', () => {
+      let sut = left<string, string>("lval");
+      let actual = sut.bindRight(x => { throw new Error(x); });
+      expect(actual.equal(left("lval"))).to.be.true;
+    })
+
 
     it('should correctly compare to other left with the same value', () => {
       expect(left<number, number>(5).equal(left<number, number>(5))).to.be.true;
@@ -88,6 +91,16 @@ describe('Either monad', () => {
       let actual = sut.bindLeft(x => { throw new Error(x); });
       expect(actual.equal(right("rval"))).to.be.true;
     })
+
+    it('should execute bindRight function and return new right', () => {
+      let sut = right<string, string>("rval");
+      let next = right<string, string>("xyz");
+      let actual = sut.bindRight(x => {
+        if(x === "rval") { return next; }
+        else { throw new Error(x); }
+      });
+      expect(actual).to.be.equal(next);
+    }),
 
     it('should correctly compare to other right with the same value', () => {
       expect(right<number, number>(5).equal(right<number, number>(5))).to.be.true;
