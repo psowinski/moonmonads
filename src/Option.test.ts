@@ -39,6 +39,12 @@ describe('Option monad', () => {
       expect(actual).to.be.equal(next);
     }),
 
+    it('should execute map function and return result as some', () => {
+      let sut = some(2);
+      let actual = sut.map(x => x * 2);
+      expect(actual.equal(some(4))).to.be.true;
+    }),
+
     it('should correctly compare to other some with the same value', () => {
       expect(some(5).equal(some(5))).to.be.true;
     }),
@@ -50,7 +56,6 @@ describe('Option monad', () => {
     it('should correctly compare to none', () => {
       expect(some("abc").equal(none<string>())).to.be.false;
     });
-
   }),
 
   describe('none function', () => {
@@ -78,6 +83,12 @@ describe('Option monad', () => {
       });
       expect(actual).to.be.equal(123);
       expect(ret).to.be.equal(sut);
+    }),
+
+    it('should execute map function and return none', () => {
+      let sut = none<number>();
+      let actual = sut.map(x => "abc");
+      expect(actual.equal(none<string>())).to.be.true;
     }),
 
     it('should execute bind function and return none', () => {
