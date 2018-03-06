@@ -1,4 +1,4 @@
-import { some, none } from './Option';
+import { some, none } from './option';
 import { expect } from 'chai'
 
 describe('Option monad', () => {

@@ -1,4 +1,4 @@
-import { left, right } from './Either';
+import { left, right } from './either';
 import { expect } from 'chai'
 
 describe('Either monad', () => {

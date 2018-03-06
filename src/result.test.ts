@@ -1,4 +1,4 @@
-import { success, fail } from './Result';
+import { success, fail } from './result';
 import { expect } from 'chai'
 
 describe('Result monad', () => {
