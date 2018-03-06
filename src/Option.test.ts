@@ -7,6 +7,15 @@ describe('Option monad', () => {
       let sut = some<string>("");
       expect(sut.isSome()).to.be.true;
       expect(sut.isNone()).to.be.false;
+    }),
+
+    it('should match some action', () => {
+      let sut = some("abc");
+      let actual = sut.match({
+        some: sv => sv,
+        none: () => { throw new Error("none"); }
+      });
+      expect(actual).to.be.equal("abc");
     });
   }),
 
@@ -15,6 +24,15 @@ describe('Option monad', () => {
       let sut = none<string>();
       expect(sut.isSome()).to.be.false;
       expect(sut.isNone()).to.be.true;
+    }),
+
+    it('should match some action', () => {
+      let sut = none();
+      let actual = sut.match({
+        some: sv => { throw new Error("none"); },
+        none: () => 123
+      });
+      expect(actual).to.be.equal(123);
     });
   });
 });

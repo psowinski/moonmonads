@@ -13,6 +13,11 @@ export function none<T>(): Option<T> {
   return new None();
 }
 
+export interface OptionMatch<T, U> {
+  some: (v: T) => U,
+  none: () => U
+}
+
 export class Some<T> {
   constructor(private readonly value: T){
   }
@@ -26,9 +31,13 @@ export class Some<T> {
   isNone(): boolean {
     return false;
   }
+
+  match<U>(actions: OptionMatch<T, U>): U {
+    return actions.some(this.value);
+  }
 }
 
-export class None {
+export class None<T> {
 
   isSome(): boolean {
     return false;
@@ -37,6 +46,10 @@ export class None {
   isNone(): boolean {
     return true;
   }
+
+  match<U>(actions: OptionMatch<T, U>): U {
+    return actions.none();
+  }
 }
 
-export type Option<T> = Some<T> | None;
+export type Option<T> = Some<T> | None<T>;
