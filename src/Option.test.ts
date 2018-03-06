@@ -27,6 +27,16 @@ describe('Option monad', () => {
       });
       expect(actual).to.be.equal(123);
       expect(ret).to.be.equal(sut);
+    }),
+
+    it('should execute bind function and return new monad', () => {
+      let sut = some("abc");
+      let next = some(123);
+      let actual = sut.bind(x => {
+        if(x === "abc") { return next; }
+        else { throw new Error(x); }
+      });
+      expect(actual).to.be.equal(next);
     });
 
   }),
@@ -57,6 +67,12 @@ describe('Option monad', () => {
       expect(actual).to.be.equal(123);
       expect(ret).to.be.equal(sut);
     });
+
+    /*it('should execute bind function and return none', () => {
+      let sut = none<string>();
+      let actual = sut.bind(x => some(123));
+      expect(actual.equal(none<number>())).to.be.true;
+    });*/
 
   });
 });

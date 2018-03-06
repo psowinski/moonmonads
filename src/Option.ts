@@ -45,6 +45,10 @@ export class Some<T> {
     actions.some(this.value);
     return this;
   }
+
+  bind<U>(f: (x: T) => Option<U>): Option<U> {
+    return f(this.value);
+  }
 }
 
 export class None<T> {
@@ -65,6 +69,11 @@ export class None<T> {
     actions.none();
     return this;
   }
+
+  bind<U>(f: (x: T) => Option<U>): Option<U> {
+    return none<U>();
+  }
+
 }
 
 export type Option<T> = Some<T> | None<T>;
