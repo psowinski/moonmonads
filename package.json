@@ -4,12 +4,15 @@
   "description": "Moon Monads",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "mocha -c -r ts-node/register src/**/*.test.ts"
+    "clean": "rm -rf dist lib",
+    "pretest": "npm run clean && tsc",
+    "test": "mocha -c lib/**/*.test.js",
+    "prebuild": "npm run test",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/psowinski/moonmonads.git"
   },
   "keywords": [
     "monad"
@@ -19,11 +22,10 @@
   "devDependencies": {
     "@types/chai": "^4.1.2",
     "@types/mocha": "^2.2.48",
-    "@types/sinon": "^4.3.0",
     "chai": "^4.1.2",
     "mocha": "^5.0.1",
-    "sinon": "^4.4.2",
-    "ts-node": "^5.0.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.10"
   }
 }
