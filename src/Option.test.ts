@@ -16,7 +16,19 @@ describe('Option monad', () => {
         none: () => { throw new Error("none"); }
       });
       expect(actual).to.be.equal("abc");
+    }),
+
+    it('should execute dead end acton and return itself on tee', () => {
+      let sut = some(123);
+      let actual = 0;
+      let ret = sut.tee({
+        some: sv => { actual = sv },
+        none: () => { throw new Error("none"); }
+      });
+      expect(actual).to.be.equal(123);
+      expect(ret).to.be.equal(sut);
     });
+
   }),
 
   describe('none function', () => {
@@ -33,6 +45,18 @@ describe('Option monad', () => {
         none: () => 123
       });
       expect(actual).to.be.equal(123);
+    }),
+
+    it('should execute dead end acton and return itself on tee', () => {
+      let sut = none<string>();
+      let actual = 0;
+      let ret = sut.tee({
+        some: sv => { throw new Error(sv); },
+        none: () => { actual = 123 }
+      });
+      expect(actual).to.be.equal(123);
+      expect(ret).to.be.equal(sut);
     });
+
   });
 });

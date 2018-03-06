@@ -18,6 +18,11 @@ export interface OptionMatch<T, U> {
   none: () => U
 }
 
+export interface OptionTee<T> {
+  some: (v: T) => void,
+  none: () => void
+}
+
 export class Some<T> {
   constructor(private readonly value: T){
   }
@@ -35,6 +40,11 @@ export class Some<T> {
   match<U>(actions: OptionMatch<T, U>): U {
     return actions.some(this.value);
   }
+
+  tee(actions: OptionTee<T>): Option<T> {
+    actions.some(this.value);
+    return this;
+  }
 }
 
 export class None<T> {
@@ -49,6 +59,11 @@ export class None<T> {
 
   match<U>(actions: OptionMatch<T, U>): U {
     return actions.none();
+  }
+
+  tee(actions: OptionTee<T>): Option<T> {
+    actions.none();
+    return this;
   }
 }
 
