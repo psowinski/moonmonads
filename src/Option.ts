@@ -49,6 +49,13 @@ export class Some<T> {
   bind<U>(f: (x: T) => Option<U>): Option<U> {
     return f(this.value);
   }
+
+  equal(x: Option<T>): boolean {
+    return x.match({
+      some: sv => sv === this.value,
+      none: () => false
+    });
+  }
 }
 
 export class None<T> {
@@ -74,6 +81,12 @@ export class None<T> {
     return none<U>();
   }
 
+  equal(x: Option<T>): boolean {
+    return x.match({
+      some: sv => false,
+      none: () => true
+    });
+  }
 }
 
 export type Option<T> = Some<T> | None<T>;
