@@ -45,6 +45,11 @@ describe('Option monad', () => {
       expect(actual.equal(some(4))).to.be.true;
     }),
 
+    it('should always return real value', () => {
+      let sut = some(5);
+      expect(sut.valueOr(1)).to.be.equal(5);
+    }),
+
     it('should correctly compare to other some with the same value', () => {
       expect(some(5).equal(some(5))).to.be.true;
     }),
@@ -96,6 +101,11 @@ describe('Option monad', () => {
       let actual = sut.bind(x => some(123));
       expect(actual.equal(none<number>())).to.be.true;
     });
+
+    it('should always return default value', () => {
+      let sut = none<string>();
+      expect(sut.valueOr("abc")).to.be.equal("abc");
+    }),
 
     it('should correctly compare to other none', () => {
       expect(none().equal(none())).to.be.true;

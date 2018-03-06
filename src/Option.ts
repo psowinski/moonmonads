@@ -54,6 +54,10 @@ export class Some<T> {
     return this.bind((y: T) => some(f(y)));
   }
 
+  valueOr(defaultValue: T): T {
+    return this.value;
+  }
+
   equal(x: Option<T>): boolean {
     return x.match({
       some: sv => sv === this.value,
@@ -87,6 +91,10 @@ export class None<T> {
 
   map<U>(f: (x: T) => U): Option<U> {
     return none<U>();
+  }
+
+  valueOr(defaultValue: T): T {
+    return defaultValue;
   }
 
   equal(x: Option<T>): boolean {
